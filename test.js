@@ -199,3 +199,9 @@ test('has', t => {
 	t.is(m.has({'foo.baz': {bar: true}}, 'foo\\.baz.bar'), true);
 	t.is(m.has({'fo.ob.az': {bar: true}}, 'fo\\.ob\\.az.bar'), true);
 });
+
+test('prevent setting/getting `__proto__`', t => {
+	m.set({}, '__proto__.unicorn', '🦄');
+	t.not({}.unicorn, '🦄'); // eslint-disable-line no-use-extend-native/no-use-extend-native
+	t.is(m.get({}, '__proto__'), undefined);
+});
